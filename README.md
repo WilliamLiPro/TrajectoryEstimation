@@ -8,6 +8,13 @@ Tips: part of the tests need path configuration. Please replace the relative pat
 Trajectory estimation is a critical problem in tasks such as dynamic path planning, navigation, tracking and SLAM. Many previous works on trajectory estimation strongly rely on prior information. Thus, they are sensitive to disturbances such as model error, observation noise, statistical deviations and nonlinearity. In this paper, an online adaptive optimization (OAO) algorithm is proposed to address these disturbances. First, a damped power turn (DPT) model following Newtonian mechanics is introduced, and a discrete-time model is derived to describe motion with limited power. This model avoids the infinite velocity in the linear dynamic model. Then, the trajectory is optimized by the maximum posteriori estimation under regional correlations. To correct for errors in the prior information and improve the robustness of the algorithm, the transition and observation covariances are updated online based on a fading memory strategy and error analysis. In addition, a truncation approach is used to improve the computational efficiency, therein adaptively limiting the total time consumption. Extensive experiments on three types of tasks demonstrate the robustness and precision of our approach under various disturbance types. This method greatly outperforms comparison methods, especially in complex situations.
 
 ## Results
+![process of OAO algorithm](https://raw.githubusercontent.com/WilliamLiPro/TrajectoryEstimation/master/present-result/process.png)
+
+![Trajectory estimation from 3D observations (under noise)](https://github.com/WilliamLiPro/TrajectoryEstimation/raw/master/present-result/trajectory-estimation.png)
+
+![online path planning](https://raw.githubusercontent.com/WilliamLiPro/TrajectoryEstimation/master/present-result/online-path-planning.png)
+
+![visual tracking filtering](https://raw.githubusercontent.com/WilliamLiPro/TrajectoryEstimation/master/present-result/visual-tracking-filtering.png)
 
 ## References
 >[1]	E.A. Wan, and R. Van Der Merwe. “The unscented Kalman filter for nonlinear estimation”. IEEE Adaptive Systems for Signal Processing, Communications, and Control Symposium. Alberta, Canada, 2000, pp. 153–158.  
