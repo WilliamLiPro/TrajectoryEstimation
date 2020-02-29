@@ -59,4 +59,6 @@ axis([x_min,x_max,y_min,y_max]);
 xlabel('x');
 ylabel('y');
 zlabel('z');
+
+drawnow;
 end

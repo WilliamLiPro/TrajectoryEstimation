@@ -64,15 +64,15 @@ Qs=cell(n,1);
 
 %%  OAO
 sitar.Da=0.0001;
-sitar.Dt=0.00005*eye(3,3);
-sitar.Dt(2,2)=0.00005;
-sitar.Dt(3,3)=0.00005;
+sitar.Dt=0.0005*eye(3,3);
+sitar.Dt(2,2)=0.0001;
+sitar.Dt(3,3)=0.0001;
 sitar.alpha=0.01;
-sitar.beta=0.4;
+sitar.beta=0.2;
 
 if strcmp(trajType,'snake')
     sitar.Da=0.0002;
-    sitar.Dt=0.0001*eye(3,3);
+    sitar.Dt=0.00005*eye(3,3);
 end
 
 OAO_traj=zeros(10,n);       %πÏº£
@@ -94,9 +94,11 @@ for i=1:n
     %     drawTrajectory(OAO_traj(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
     %     drawObserve(obs(1:3,1:i,:),2,x_min,x_max,y_min,y_max);%π€≤‚Õº
     
-    drawObserveV2(obs(1:3,1:i,:),flg,12,x_min,x_max,y_min,y_max,i);%π€≤‚Õº
+    %   drawObserveV2(obs(1:3,1:i,:),flg,12,x_min,x_max,y_min,y_max,i);%π€≤‚Õº
+    drawObserveSimple(obs(1:3,1:i,:),flg,12,x_min,x_max,y_min,y_max);%π€≤‚Õº
     xlabel('');ylabel('');
-    drawTrajectory(OAO_traj(1:3,1:i),11,x_min,x_max,y_min,y_max); %πÏº£Õº
+%     drawTrajectory(OAO_traj(1:3,1:i),11,x_min,x_max,y_min,y_max); %πÏº£Õº
+    drawTrajectorySimple(OAO_traj(1:3,1:i),11,x_min,x_max,y_min,y_max); %πÏº£Õº
     xlabel('');ylabel('');
 end
 
