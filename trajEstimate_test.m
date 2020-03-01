@@ -102,9 +102,9 @@ for i=1:n
     xlabel('');ylabel('');
 end
 
-drawObserveV2(obs(1:3,1:i,:),flg,12,x_min,x_max,y_min,y_max,0);%π€≤‚Õº
+drawObserveV2(obs(1:3,1:n,:),flg,12,x_min,x_max,y_min,y_max,0);%π€≤‚Õº
 xlabel('');ylabel('');
 set(gcf,'Position',[100,200,360,300]);
-drawTrajectory(OAO_traj(1:3,1:i),11,x_min,x_max,y_min,y_max); %πÏº£Õº
+drawTrajectory(OAO_traj(1:3,1:n),11,x_min,x_max,y_min,y_max); %πÏº£Õº
 xlabel('');ylabel('');
 set(gcf,'Position',[400,200,360,300]);

@@ -18,22 +18,6 @@ if UpTime==1 %更新时间
     return;
 end
 
-% 剔除为0的数据
-id=0;
-for i=1:n
-    if(p_ob(1,i)~=0)
-        id=id+1;
-    end
-end
-p_ob_draw=zeros(3,id,lz);
-id=1;
-for i=1:n
-    if(p_ob(1,i)~=0)
-        p_ob_draw(:,id,:)=p_ob(:,i,:);
-        id=id+1;
-    end
-end
-
 % 按时序着色
 figure(fig_id);
 clf;
@@ -50,7 +34,7 @@ for i=1:n
     color_l(2)=1-abs(rate);
     color_l(3)=max(rate,0);
     
-    data1(:,:)=p_ob_draw(:,i,:);
+    data1(:,:)=p_ob(:,i,:);
     plot3(data1(1,:),data1(2,:),data1(3,:),'.','color',color_l,'MarkerSize',3,'LineWidth',1);
 end
 hold off;
