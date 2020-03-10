@@ -1,7 +1,8 @@
 %path planning test
+% path planning in random obstacle environment
 %input:
 % key points and arrive time
-% real time barriers
+% real time obstacles
 % key points covariance: Rzs_kp
 % barriers covariance: Rzs_br
 %output:
@@ -9,7 +10,7 @@
 
 addpath('path planning');
 
-%% 1.create key points and barriers
+%% 1.create key points and obstacles
 %(1) key points
 nkp=10;
 time=1:10:nkp*10-9;
@@ -42,7 +43,7 @@ n=time(nkp);
 As=cell(n,1);
 Qs=cell(n,1);
 
-%%  OAO
+%%  AdaTE
 sitar.Da=0.2;
 sitar.Dt=0.5*eye(3,3);
 sitar.Dt(2,2)=0.5;
@@ -50,15 +51,15 @@ sitar.Dt(3,3)=0.1;
 sitar.alpha=0.01;
 sitar.beta=0.4;
 
-OAO_traj=zeros(9,n);       %trajectory
-OAO_error=zeros(1,n);
+ada_traj=zeros(9,n);       %trajectory
+ada_error=zeros(1,n);
 
 dX=zeros(9,n);
 cut_t=0;
 
 %Initialize
 nx_a=time(2);
-[As(1:nx_a),Qs(1:nx_a),cut_t,OAO_traj(:,1:nx_a),dX(:,1:nx_a),preX]=OAOestimation_PathPlan(As(1:nx_a),Qs(1:nx_a),Rzs_kp,Rzs_br,H,cut_t,OAO_traj(:,1:nx_a),dX(:,1:nx_a),Zkp,Zbr,sitar,time,1);
+[As(1:nx_a),Qs(1:nx_a),cut_t,ada_traj(:,1:nx_a),dX(:,1:nx_a),preX]=AdaTE_PathPlan(As(1:nx_a),Qs(1:nx_a),Rzs_kp,Rzs_br,H,cut_t,ada_traj(:,1:nx_a),dX(:,1:nx_a),Zkp,Zbr,sitar,time,1);
 % drawPathPlan(OAO_traj(:,1:nx_a),cut_t,Rzs_kp,Rzs_br,Zkp,Zbr,1,0,100,0,100) 
     
 cut_t=cut_t+1;
@@ -70,15 +71,15 @@ for i=1:nkp-2
     end
     
     for j=time(i):time(i+1)-1
-        [As(1:nx_a),Qs(1:nx_a),cut_t,OAO_traj(:,1:nx_a),dX(:,1:nx_a),preX]=OAOestimation_PathPlan(As(1:nx_a),Qs(1:nx_a),Rzs_kp,Rzs_br,H,cut_t,OAO_traj(:,1:nx_a),dX(:,1:nx_a),Zkp,Zbr,sitar,time,1);
+        [As(1:nx_a),Qs(1:nx_a),cut_t,ada_traj(:,1:nx_a),dX(:,1:nx_a),preX]=AdaTE_PathPlan(As(1:nx_a),Qs(1:nx_a),Rzs_kp,Rzs_br,H,cut_t,ada_traj(:,1:nx_a),dX(:,1:nx_a),Zkp,Zbr,sitar,time,1);
 %         Zbr(:,j,:);
-%         drawPathPlan(OAO_traj(:,1:nx_a),cut_t,Rzs_kp,Rzs_br,Zkp,Zbr,1,0,100,0,100) 
+         drawPathPlan(ada_traj(:,1:nx_a),cut_t,Rzs_kp,Rzs_br,Zkp,Zbr,1,0,100,0,100) 
         cut_t=cut_t+1;
     end
 end
 
 xlabel('');ylabel('');
 set(gcf,'Position',[100,200,360,300]);
-drawPathPlan(OAO_traj(:,1:nx_a),cut_t,Rzs_kp,Rzs_br,Zkp,Zbr,21,0,100,0,100) %path planned
+drawPathPlan(ada_traj(:,1:nx_a),cut_t,Rzs_kp,Rzs_br,Zkp,Zbr,21,0,100,0,100) %path planned
 xlabel('');ylabel('');
 set(gcf,'Position',[400,200,360,300]);

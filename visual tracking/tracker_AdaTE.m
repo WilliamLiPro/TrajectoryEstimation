@@ -2,10 +2,9 @@
 %%  Author: William Li
 %%  Email:  WilliamLi_Pro@163.com
 
-function result=tracker_OAO(tracker,dataset,camPara,priDist,drawresult)
-%   Visual tracker with the method of adaptive maximum likelihood filter and
-%   acceleration model. The observation for tracking is the result of the correlation
-%   filter
+function result=tracker_AdaTE(tracker,dataset,camPara,priDist,drawresult)
+%   Visual tracker with the method of adaptive trajectory estimation
+% . The observation for tracking is the result of fDSST
 %
 %   Input:
 %   - tracker (structure): A visual tracker with multi-observations
@@ -128,7 +127,7 @@ end
 Rzs(1,:)=Rzs_ob(1,:);
 
 i=1;    %状态初始化
-[As(1:i),Qs(1:i),Rzs(1:i,:),cut_t,oao_traj(:,1:i),dX(:,1:i),~]=OAOestimationAcc(As(1:i-1),Qs(1:i-1),Rzs_ob(1:i,:),Rzs(1:i,:),H,cut_t,oao_traj(:,1:i-1),dX(:,1:i-1),obs(:,1:i,:),sitar,time);
+[As(1:i),Qs(1:i),Rzs(1:i,:),cut_t,oao_traj(:,1:i),dX(:,1:i),~]=AdaTEAcc(As(1:i-1),Qs(1:i-1),Rzs_ob(1:i,:),Rzs(1:i,:),H,cut_t,oao_traj(:,1:i-1),dX(:,1:i-1),obs(:,1:i,:),sitar,time);
 
 %%  后续更新
 for i=2:n
@@ -155,7 +154,7 @@ for i=2:n
     Rzs(i,:)=Rzs_ob(i,:);
     
     % 滤波校正
-    [As(1:i),Qs(1:i),Rzs(1:i,:),cut_t,oao_traj(:,1:i),dX(:,1:i),~]=OAOestimationAcc(As(1:i-1),Qs(1:i-1),Rzs_ob(1:i,:),Rzs(1:i,:),H,cut_t,oao_traj(:,1:i-1),dX(:,1:i-1),obs(:,1:i,:),sitar,time);
+    [As(1:i),Qs(1:i),Rzs(1:i,:),cut_t,oao_traj(:,1:i),dX(:,1:i),~]=AdaTEAcc(As(1:i-1),Qs(1:i-1),Rzs_ob(1:i,:),Rzs(1:i,:),H,cut_t,oao_traj(:,1:i-1),dX(:,1:i-1),obs(:,1:i,:),sitar,time);
     
     % 坐标转换
     for j=1:i

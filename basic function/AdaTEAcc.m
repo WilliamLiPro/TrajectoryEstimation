@@ -1,6 +1,6 @@
-%基于 online adaptive optimization 的轨迹估计函数
+%基于 adaptive trajectory estimation 的轨迹估计函数
 %使用加速度模型
-function [As_up,Qs_up,Rzs_up,cut_t,Xs_up,dX_up,preX]=OAOestimationAcc(As,Qs,Rzs_ob,Rzs,H,cut_t,Xs,dX,Zs,sitar,time)
+function [As_up,Qs_up,Rzs_up,cut_t,Xs_up,dX_up,preX]=AdaTEAcc(As,Qs,Rzs_ob,Rzs,H,cut_t,Xs,dX,Zs,sitar,time)
 %@As 状态转移矩阵
 %@Qs 观测协方差
 %@Rzs_ob 观测方差的初始值

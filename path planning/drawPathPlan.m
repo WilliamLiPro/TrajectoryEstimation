@@ -29,6 +29,7 @@ plot3(Xs(1,cut_t+1:n),Xs(2,cut_t+1:n),Xs(3,cut_t+1:n),'m-');
 
 hold off;
 axis([x_min,x_max,y_min,y_max,-1,80]);
+drawnow;
 end
 
 function drawCircle(p,R,col,fig_id)

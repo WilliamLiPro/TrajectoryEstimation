@@ -1,6 +1,6 @@
 % test: trajectory estimation under noise observation
-% Online adaptive optimization for trajectory estimation
-% complexity < O(k)
+% Online adaptive trajectory estimation
+% complexity < O(k): where k is the time
 
 addpath('basic function','Typical traj test');
 
@@ -10,6 +10,7 @@ addpath('basic function','Typical traj test');
 % observation covariance: Rz
 % time range of colored noise: crn_st,crn_ft
 % rate of colored noise: ratio
+% number of observer: 4
 
 trajType='snake';
 nz=4;
@@ -62,7 +63,7 @@ H=[eye(3),zeros(3,7)];
 As=cell(n,1);
 Qs=cell(n,1);
 
-%%  OAO
+%%  AdaTE
 sitar.Da=0.0001;
 sitar.Dt=0.0005*eye(3,3);
 sitar.Dt(2,2)=0.0001;
@@ -75,8 +76,9 @@ if strcmp(trajType,'snake')
     sitar.Dt=0.00005*eye(3,3);
 end
 
-OAO_traj=zeros(10,n);       %¹ì¼£
-OAO_error=zeros(1,n);
+ada_traj=zeros(10,n);       %¹ì¼£
+ada_error=zeros(1,n);
+ada_time = zeros(1,n);
 
 dX=zeros(10,n);
 cut_t=0;
@@ -87,24 +89,31 @@ if strcmp(trajType,'snake')
 end
 
 for i=1:n
-    % ¹À¼Æ
-    [As(1:i),Qs(1:i),Rzs(1:i,:),cut_t,OAO_traj(:,1:i),dX(:,1:i),preX]=OAOestimation(As(1:i-1),Qs(1:i-1),Rzs_ob(1:i,:),Rzs(1:i,:),H,cut_t,OAO_traj(:,1:i-1),dX(:,1:i-1),obs(:,1:i,:),sitar,time);
-    OAO_error(i)=sqrt(mean(sum((OAO_traj(1:3,1:i)-real(1:3,1:i)).^2,1)));
+    % estimation
+    tic;
+    [As(1:i),Qs(1:i),Rzs(1:i,:),cut_t,ada_traj(:,1:i),dX(:,1:i),preX]=AdaTE(As(1:i-1),Qs(1:i-1),Rzs_ob(1:i,:),Rzs(1:i,:),H,cut_t,ada_traj(:,1:i-1),dX(:,1:i-1),obs(:,1:i,:),sitar,time);
+    ada_error(i)=sqrt(mean(sum((ada_traj(1:3,1:i)-real(1:3,1:i)).^2,1)));
+    
+    ada_time(i) = toc;
     
     %     drawTrajectory(OAO_traj(1:3,1:i),1,x_min,x_max,y_min,y_max); %¹ì¼£Í¼
     %     drawObserve(obs(1:3,1:i,:),2,x_min,x_max,y_min,y_max);%¹Û²âÍ¼
     
     %   drawObserveV2(obs(1:3,1:i,:),flg,12,x_min,x_max,y_min,y_max,i);%¹Û²âÍ¼
     drawObserveSimple(obs(1:3,1:i,:),flg,12,x_min,x_max,y_min,y_max);%¹Û²âÍ¼
-    xlabel('');ylabel('');
 %     drawTrajectory(OAO_traj(1:3,1:i),11,x_min,x_max,y_min,y_max); %¹ì¼£Í¼
-    drawTrajectorySimple(OAO_traj(1:3,1:i),11,x_min,x_max,y_min,y_max); %¹ì¼£Í¼
-    xlabel('');ylabel('');
+    drawTrajectorySimple(ada_traj(1:3,1:i),11,x_min,x_max,y_min,y_max); %¹ì¼£Í¼
 end
-
+% draw result
 drawObserveV2(obs(1:3,1:n,:),flg,12,x_min,x_max,y_min,y_max,0);%¹Û²âÍ¼
 xlabel('');ylabel('');
 set(gcf,'Position',[100,200,360,300]);
-drawTrajectory(OAO_traj(1:3,1:n),11,x_min,x_max,y_min,y_max); %¹ì¼£Í¼
+drawTrajectory(ada_traj(1:3,1:n),11,x_min,x_max,y_min,y_max); %¹ì¼£Í¼
 xlabel('');ylabel('');
 set(gcf,'Position',[400,200,360,300]);
+
+figure(95);
+plot(1:n,ada_time*1000);
+xlabel('Time ID');
+ylabel('Time consumption (ms)');
+title('Time consumption during online estimation');

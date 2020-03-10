@@ -2,7 +2,7 @@
 %    Author: William Li
 %    Email:  WilliamLi_Pro@163.com
 
-%   Test of Online Adaptive Optimization in Visual tracking
+%   Test of adaptive trajectory estimation in visual tracking
 %   contrast algorithm£ºEKF-RTS with Acc,EKF-RTS with PTM,UKF-URTS with Acc,UKF-URTS with PTM
 %   database£ºVOT
 
@@ -71,8 +71,8 @@ tracker.estimate=@DSST_estimate;
 tracker.update=@DSST_update;
 tracker.sampleNumber=1;
 
-%%  OAO-DPT
-oao_result=tracker_OAO(tracker,dataset,camPara,priDist,1);
+%%  AdaTE
+ada_result=tracker_AdaTE(tracker,dataset,camPara,priDist,1);
 
 %%  pure trcker:DSST
 pure_result=trackerRun(tracker,dataset,camPara,priDist,1);
@@ -81,16 +81,16 @@ pure_result=trackerRun(tracker,dataset,camPara,priDist,1);
 frame_label=[1:dataset.imageNumber];
 
 figure(2);
-plot(frame_label,pure_result.TrajectoryOverlap,'m:',frame_label,oao_result.TrajectoryOverlap,'c');
+plot(frame_label,pure_result.TrajectoryOverlap,'m:',frame_label,ada_result.TrajectoryOverlap,'c');
 
-y_min=min([pure_result.TrajectoryOverlap,oao_result.TrajectoryOverlap]);
-y_max=max([pure_result.TrajectoryOverlap,oao_result.TrajectoryOverlap]);
+y_min=min([pure_result.TrajectoryOverlap,ada_result.TrajectoryOverlap]);
+y_max=max([pure_result.TrajectoryOverlap,ada_result.TrajectoryOverlap]);
 
 axis([1,dataset.imageNumber,y_min,y_max]);
 title('VOT-Singer1');
 set(gcf,'Position',[500,200,300,250]);
 
-re_compare=[pure_result.TrajectoryOverlap(dataset.imageNumber),oao_result.TrajectoryOverlap(dataset.imageNumber)];
+re_compare=[pure_result.TrajectoryOverlap(dataset.imageNumber),ada_result.TrajectoryOverlap(dataset.imageNumber)];
 
 %%  draw the box comparing
 frameid=3;
@@ -104,8 +104,8 @@ box_p=pure_result.trajectory(frameid,:);
 rect_position_vis = [box_p([1,3]) , box_p([2,4])-box_p([1,3])+1];
 rectangle('Position',rect_position_vis, 'EdgeColor','b');   %gt
 
-%DSST+OAO
-box_p=oao_result.trajectory(frameid,:); %real time
+%DSST+AdaTE
+box_p=ada_result.trajectory(frameid,:); %real time
 rect_position_vis = [box_p([1,3]) , box_p([2,4])-box_p([1,3])+1];
 rectangle('Position',rect_position_vis, 'EdgeColor','r');   %gt
 

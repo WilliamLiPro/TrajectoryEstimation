@@ -1,4 +1,4 @@
-%基于 online adaptive optimization 的轨迹估计函数
+%基于 adaptive trajectory estimation 的轨迹估计函数
 %使用DPT模型
 %用于路径规划
 function [As_up,Qs_up,cut_t,Xs_up,dX_up,preX]=AdaTE_PathPlan(As,Qs,Rzs_kp,Rzs_br,H,cut_t,Xs,dX,Zkp,Zbr,sitar,time,dt)
