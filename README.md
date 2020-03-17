@@ -4,7 +4,7 @@ For more information, please contact author by: williamli_pro@163.com
 
 ## Citation
 If you want to use this code in your project, please cite:
-Weipeng Li, Xiaogang Yang, Ruitao Lu, "Adaptive Trajectory Estimation with Power Limited Steering Model under Perturbation Compensation",  arXiv:1912.03661.
+Weipeng Li, Xiaogang Yang, Ruitao Lu, Chuan He, "Adaptive Trajectory Estimation with Power Limited Steering Model under Perturbation Compensation",  arXiv:1912.03661.
 
 Tips: part of the tests need path configuration. Please replace the relative path into your absolute path (this program) if necessary.
 
