@@ -3,8 +3,8 @@ Fast trajectory MAP and its corresponding application in path planning and visua
 For more information, please contact author by: williamli_pro@163.com
 
 ## Citation
-If you want to use this code in your project, please cite:
-Weipeng Li, Xiaogang Yang, Ruitao Lu, Chuan He, "Adaptive Trajectory Estimation with Power Limited Steering Model under Perturbation Compensation",  arXiv:1912.03661.
+Welcome to use this code in your project, please cite: <br>
+[Weipeng Li, Xiaogang Yang, Ruitao Lu, Chuan He, "Adaptive Trajectory Estimation with Power Limited Steering Model under Perturbation Compensation", arXiv:1912.03661, 2019.](https://arxiv.org/abs/1912.03661)
 
 Tips: part of the tests need path configuration. Please replace the relative path into your absolute path (this program) if necessary.
 
