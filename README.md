@@ -18,7 +18,7 @@ Trajectory estimation under regional correlations is applied in numerous tasks l
 
 ![Local navigation and obstacle avoidance](https://raw.githubusercontent.com/WilliamLiPro/TrajectoryEstimation/master/present-result/online-path-planning.png)
 
-![visual tracking filtering](https://raw.githubusercontent.com/WilliamLiPro/TrajectoryEstimation/master/present-result/visual-tracking-filtering.png)
+![visual tracking](https://raw.githubusercontent.com/WilliamLiPro/TrajectoryEstimation/master/present-result/visual-tracking-filtering.png)
 
 ## References
 >[1]	E.A. Wan, and R. Van Der Merwe. “The unscented Kalman filter for nonlinear estimation”. IEEE Adaptive Systems for Signal Processing, Communications, and Control Symposium. Alberta, Canada, 2000, pp. 153–158.  
