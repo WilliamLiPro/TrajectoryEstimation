@@ -55,6 +55,10 @@ for i=1:n
 end
 
 % Æ¯ÒÆ
+if rate<=0
+    return;
+end
+
 if(nz*rate<1)
     dt=fix(1/(nz*rate));
     for i=ts:dt:te

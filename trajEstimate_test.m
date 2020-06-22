@@ -100,16 +100,14 @@ for i=1:n
     %     drawObserve(obs(1:3,1:i,:),2,x_min,x_max,y_min,y_max);%π€≤‚Õº
     
     %   drawObserveV2(obs(1:3,1:i,:),flg,12,x_min,x_max,y_min,y_max,i);%π€≤‚Õº
-    drawObserveSimple(obs(1:3,1:i,:),flg,12,x_min,x_max,y_min,y_max);%π€≤‚Õº
+%     drawObserveSimple(obs(1:3,1:i,:),flg,12,x_min,x_max,y_min,y_max);%π€≤‚Õº
 %     drawTrajectory(OAO_traj(1:3,1:i),11,x_min,x_max,y_min,y_max); %πÏº£Õº
-    drawTrajectorySimple(ada_traj(1:3,1:i),11,x_min,x_max,y_min,y_max); %πÏº£Õº
+%     drawTrajectorySimple(ada_traj(1:3,1:i),11,x_min,x_max,y_min,y_max); %πÏº£Õº
 end
 % draw result
-drawObserveV2(obs(1:3,1:n,:),flg,12,x_min,x_max,y_min,y_max,0);%π€≤‚Õº
-xlabel('');ylabel('');
+drawObserveSimple(obs(1:3,1:n,:),flg,12,x_min,x_max,y_min,y_max);%π€≤‚Õº
 set(gcf,'Position',[100,200,360,300]);
-drawTrajectory(ada_traj(1:3,1:n),11,x_min,x_max,y_min,y_max); %πÏº£Õº
-xlabel('');ylabel('');
+drawTrajectorySimple(ada_traj(1:3,1:n),11,x_min,x_max,y_min,y_max); %πÏº£Õº
 set(gcf,'Position',[400,200,360,300]);
 
 figure(95);

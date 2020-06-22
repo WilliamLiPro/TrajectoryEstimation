@@ -54,7 +54,7 @@ H=[eye(3),zeros(3,7)];
 As=cell(n,1);
 Qs=cell(n,1);
 
-%%  OAO
+%%  AdaTE
 sitar.Da=0.0001;
 sitar.Dt=0.00005*eye(3,3);
 sitar.Dt(2,2)=0.00005;
@@ -67,8 +67,8 @@ if strcmp(trajType,'snake')
     sitar.Dt=0.0001*eye(3,3);
 end
 
-OAO_traj=zeros(10,n);       %πÏº£
-OAO_error=zeros(1,n);
+Ada_traj=zeros(10,n);       %πÏº£
+Ada_error=zeros(1,n);
 
 dX=zeros(10,n);
 cut_t=0;
@@ -80,24 +80,24 @@ end
 
 for i=1:n
     % π¿º∆
-    [As(1:i),Qs(1:i),Rzs(1:i,:),cut_t,OAO_traj(:,1:i),dX(:,1:i),preX]=OAOestimation(As(1:i-1),Qs(1:i-1),Rzs_ob(1:i,:),Rzs(1:i,:),H,cut_t,OAO_traj(:,1:i-1),dX(:,1:i-1),obs(:,1:i,:),sitar,time);
-    OAO_error(i)=sqrt(mean(sum((OAO_traj(1:3,1:i)-real(1:3,1:i)).^2,1)));
+    [As(1:i),Qs(1:i),Rzs(1:i,:),cut_t,Ada_traj(:,1:i),dX(:,1:i),preX]=AdaTE(As(1:i-1),Qs(1:i-1),Rzs_ob(1:i,:),Rzs(1:i,:),H,cut_t,Ada_traj(:,1:i-1),dX(:,1:i-1),obs(:,1:i,:),sitar,time);
+    Ada_error(i)=sqrt(mean(sum((Ada_traj(1:3,1:i)-real(1:3,1:i)).^2,1)));
     
-%     drawTrajectory(OAO_traj(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
+%     drawTrajectorySimple(Ada_traj(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
 %     drawObserve(obs(1:3,1:i,:),2,x_min,x_max,y_min,y_max);%π€≤‚Õº
 
 % if i>=399
-%     drawObserveV2(obs(1:3,1:i,:),flg,12,x_min,x_max,y_min,y_max);%π€≤‚Õº
+%     drawObserveSimple(obs(1:3,1:i,:),flg,12,x_min,x_max,y_min,y_max);%π€≤‚Õº
 %     xlabel('');ylabel('');
-%     drawTrajectory(OAO_traj(1:3,1:i),11,x_min,x_max,y_min,y_max); %πÏº£Õº
+%     drawTrajectorySimple(Ada_traj(1:3,1:i),11,x_min,x_max,y_min,y_max); %πÏº£Õº
 %     xlabel('');ylabel('');
 % end
 end
 
-drawObserveV2(obs(1:3,1:i,:),flg,12,x_min,x_max,y_min,y_max);%π€≤‚Õº
+drawObserveSimple(obs(1:3,1:i,:),flg,12,x_min,x_max,y_min,y_max);%π€≤‚Õº
 xlabel('');ylabel('');
 set(gcf,'Position',[100,200,360,300]);
-drawTrajectory(OAO_traj(1:3,1:i),11,x_min,x_max,y_min,y_max); %πÏº£Õº
+drawTrajectorySimple(Ada_traj(1:3,1:i),11,x_min,x_max,y_min,y_max); %πÏº£Õº
 xlabel('');ylabel('');
 set(gcf,'Position',[400,200,360,300]);
 
@@ -113,10 +113,10 @@ for i=1:n
     MAP_traj(:,1:i)=MAPestimation(MAP_traj(:,1:i),obs(:,1:i,:),Rzs_ob(1:i,:),sitar2,time);
     MAP_error(i)=sqrt(mean(sum((MAP_traj(1:3,1:i)-real(1:3,1:i)).^2,1)));
     
-%     drawTrajectory(MAP_traj(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
+%     drawTrajectorySimple(MAP_traj(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
 %     drawObserve(obs(1:3,1:i,:),2,x_min,x_max,y_min,y_max);%π€≤‚Õº
 end
-drawTrajectory(MAP_traj(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
+drawTrajectorySimple(MAP_traj(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
 
 %%  EKF-RTS Acc
 Qs{1}=diag([4,4,4,1,1,1,0.5,0.5,0.5]);
@@ -143,10 +143,10 @@ for i=1:n
     EKF_rt(:,i)=EKF_acc(:,i);
     EKF_acc_error(i)=sqrt(mean(sum((EKF_acc(1:3,1:i)-real(1:3,1:i)).^2,1)));
     
-%     drawTrajectory(EKF_acc1(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
+%     drawTrajectorySimple(EKF_acc1(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
 %     drawObserve(obs(1:3,1:i,:),2,x_min,x_max,y_min,y_max);%π€≤‚Õº
 end
-drawTrajectory(EKF_acc(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
+drawTrajectorySimple(EKF_acc(1:3,1:i),2,x_min,x_max,y_min,y_max); %πÏº£Õº
 
 %%  EKF-RTS DPT
 Qs{1}=diag([4,4,4,1,1,1,0.4,0.2,0.2,0.2]);
@@ -176,10 +176,10 @@ for i=1:n
     end
     EKF_dpt_error(i)=cur_error;
     
-%     drawTrajectory(EKF_dpt1(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
+%     drawTrajectorySimple(EKF_dpt1(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
 %     drawObserve(obs(1:3,1:i,:),2,x_min,x_max,y_min,y_max);%π€≤‚Õº
 end
-drawTrajectory(EKF_dpt(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
+drawTrajectorySimple(EKF_dpt(1:3,1:i),3,x_min,x_max,y_min,y_max); %πÏº£Õº
 
 %%  UKF-URTS with Acc
 Qs{1}=diag([4,4,4,1,1,1,0.5,0.5,0.5]);
@@ -207,10 +207,10 @@ for i=1:n
     % Õ≥º∆ŒÛ≤Ó
     UKF_acc_error(i)=sqrt(mean(sum((UKF_acc(1:3,1:i)-real(1:3,1:i)).^2,1)));
     
-%     drawTrajectory(UKF_acc1(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
+%     drawTrajectorySimple(UKF_acc1(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
 %     drawObserve(obs(1:3,1:i,:),2,x_min,x_max,y_min,y_max);%π€≤‚Õº
 end
-drawTrajectory(UKF_acc(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
+drawTrajectorySimple(UKF_acc(1:3,1:i),4,x_min,x_max,y_min,y_max); %πÏº£Õº
 
 %%  UKF-URTS with DPT
 Qs{1}=diag([4,4,4,1,1,1,0.4,0.2,0.2,0.2]);
@@ -239,10 +239,10 @@ for i=1:n
     % Õ≥º∆ŒÛ≤Ó
     UKF_dpt_error(i)=sqrt(mean(sum((UKF_dpt(1:3,1:i)-real(1:3,1:i)).^2,1)));
     
-%     drawTrajectory(UKF_dpt1(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
+%     drawTrajectorySimple(UKF_dpt1(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
 %     drawObserve(obs(1:3,1:i,:),2,x_min,x_max,y_min,y_max);%π€≤‚Õº
 end
-drawTrajectory(UKF_dpt(1:3,1:i),1,x_min,x_max,y_min,y_max); %πÏº£Õº
+drawTrajectorySimple(UKF_dpt(1:3,1:i),5,x_min,x_max,y_min,y_max); %πÏº£Õº
 
 disp(['cruise trajectory has finished']);
 
@@ -251,7 +251,7 @@ disp(['cruise trajectory has finished']);
 result.obRMSE=sqrt(mean(sum((obs(1:3,1:i)-real(1:3,1:i)).^2,1)));
 
 % normalization
-OAO_error=OAO_error/result.obRMSE;
+Ada_error=Ada_error/result.obRMSE;
 MAP_error=MAP_error/result.obRMSE;
 EKF_acc_error=EKF_acc_error/result.obRMSE;
 EKF_dpt_error=EKF_dpt_error/result.obRMSE;
@@ -264,10 +264,10 @@ result.error=zeros(6,3);
 result.RMSE=cell(6);
 
 % OAO
-result.RMSE{1}=OAO_error;
-result.error(1,1)=mean(OAO_error); %mean
-result.error(1,2)=min(OAO_error); %min
-result.error(1,3)=max(OAO_error);%max
+result.RMSE{1}=Ada_error;
+result.error(1,1)=mean(Ada_error); %mean
+result.error(1,2)=min(Ada_error); %min
+result.error(1,3)=max(Ada_error);%max
 
 % MAP
 result.RMSE{2}=MAP_error;

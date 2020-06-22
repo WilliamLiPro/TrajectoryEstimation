@@ -38,9 +38,9 @@ end
 
 axis([x_min,x_max,y_min,y_max]);
 title('Observation');
-xlabel('x');
-ylabel('y');
-zlabel('z');
+% xlabel('x');
+% ylabel('y');
+% zlabel('z');
 
 drawnow;
 end

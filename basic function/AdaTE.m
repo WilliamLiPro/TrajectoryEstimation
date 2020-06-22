@@ -561,7 +561,9 @@ for i=1:n_use
     t=cut_t+i;  %时间戳
     
     Q=Qs{t};    %状态转移协方差
-    Qs_inv{i}=inv(Q);   %逆矩阵
+    if i<n_use
+        Qs_inv{i}=inv(Q)+eye(10)*0.00000001;   %逆矩阵
+    end
     
     for j=1:lz
         Rs_inv{i,j}=inv(Rzs{t,j});  %观测协方差逆

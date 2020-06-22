@@ -407,14 +407,14 @@ n_use=n-cut_t;
 
 Qs_inv=cell(n_use,1);
 
-for i=1:n_use
+for i=1:n_use-1
     t=cut_t+i;  %时间戳
     
-    Qs_inv{i}=inv(Qs{t});   %状态转移协方差的逆矩阵
+    Qs_inv{i}=inv(Qs{t})+eye(9)*0.00000001;   %状态转移协方差的逆矩阵
 end
 
 if(cut_t>0) %前一个协方差阵求逆
-    Qp_inv=inv(Qs{cut_t});
+    Qp_inv=inv(Qs{cut_t})+eye(9)*0.00000001;
 end
 
 %(2)计算观测方差的逆
@@ -529,7 +529,7 @@ for i=1:nbr
     
     %判断合理范围
     nrm2=dp'*invRbr{i}*dp;  %误差平方
-    if nrm2>1.2
+    if nrm2>1.5
         continue;
     end
     

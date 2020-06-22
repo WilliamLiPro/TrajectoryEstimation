@@ -78,13 +78,12 @@ y(:,3)=re_sw.error(:,1);
 y(:,4)=re_sc.error(:,1);
 y(:,5)=re_slw.error(:,1);
 y(:,6)=re_slc.error(:,1);
-y=y';
 y(y>0.4)=0.4;
 
-bar(x,y);hold on;
-errorbar(x,y,e_std');
+bar(x,y');hold on;
+errorbar(x,y',e_std');
 
 set(gca,'XTickLabel',{'a','b','c','d','e','f'});
 ylabel('normalized RMSE');
 axis([0.2,9,0,0.4]);
-legend('OAO-DPT','MAP-CT','EKF-RTS-Acc','EKF-RTS-DPT','UKF-URTS-Acc','UKF-URTS-DPT');
+legend('AdaTE-PLS','MAP-CT','EKF-RTS-Acc','EKF-RTS-PLS','UKF-URTS-Acc','UKF-URTS-PLS');
