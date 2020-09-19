@@ -1,6 +1,6 @@
 ﻿# TrajectoryEstimation
 Fast trajectory MAP and its corresponding application in path planning and visual tracking.  
-Tips: part of the tests need path configuration. Please replace the relative path into your absolute path (this program) if necessary. 
+Tips: part of the tests need path configuration. Please replace the relative path into your absolute path (this program) if necessary.  
 For more information, please contact author by: williamli_pro@163.com
 
 ## Citation
